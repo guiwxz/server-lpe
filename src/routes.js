@@ -2,39 +2,22 @@ const { Router } = require('express');
 
 const productsController = require('./controllers/products');
 const salesController = require("./controllers/sales");
+const auth = require('./controllers/auth');
 
 const routes = new Router();
 
-routes.route('/products').get(productsController.getProdutos);
-routes.route('/products').post(productsController.addProduto);
-routes.route('/products/:codigo').put(productsController.updateProduto);
-routes.route('/products/:codigo').delete(productsController.deleteProduto);
-routes.route('/products/:codigo').get(productsController.getProduto);
+routes.route('/login').post(auth.login);
 
-routes.route('/sales').get(salesController.getVendas);
-routes.route('/sales').post(salesController.addVenda);
-routes.route('/sales/:codigo').delete(salesController.deleteVenda);
-routes.route('/sales/:codigo').put(salesController.updateVenda);
-routes.route('/sales/:codigo').get(salesController.getVenda);
+routes.route('/products').get(auth.verifyJWT, productsController.getProdutos);
+routes.route('/products').post(auth.verifyJWT, productsController.addProduto);
+routes.route('/products/:codigo').put(auth.verifyJWT, productsController.updateProduto);
+routes.route('/products/:codigo').delete(auth.verifyJWT, productsController.deleteProduto);
+routes.route('/products/:codigo').get(auth.verifyJWT, productsController.getProduto);
 
-
-// rotas.route('/salas')
-//    .get(controleSalas.getSalas)
-//    .post(controleSalas.addSala)
-//    .put(controleSalas.updateSala)
-
-// rotas.route('/salas/:codigo')
-//    .get(controleSalas.getSalaPorCodigo)
-//    .delete(controleSalas.deleteSala)
-
-
-// rotas.route('/predios')
-//      .get(controlePredios.getPredios)
-//      .post(controlePredios.addPredio)
-//      .put(controlePredios.updatePredio)
-
-// rotas.route('/predios/:codigo')
-//      .get(controlePredios.getPredioPorCodigo)
-//      .delete(controlePredios.deletePredio)
+routes.route('/sales').get(auth.verifyJWT, salesController.getVendas);
+routes.route('/sales').post(auth.verifyJWT, salesController.addVenda);
+routes.route('/sales/:codigo').delete(auth.verifyJWT, salesController.deleteVenda);
+routes.route('/sales/:codigo').put(auth.verifyJWT, salesController.updateVenda);
+routes.route('/sales/:codigo').get(auth.verifyJWT, salesController.getVenda);
 
 module.exports = routes;
