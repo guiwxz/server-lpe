@@ -20,7 +20,8 @@ const getProdutos = (request, response) => {
 const addProduto = (request, response) => {
   const { nome, preco, cfop, qtde } = request.body;
   pool.query(`INSERT INTO produtos (nome, preco, cfop, qtde) 
-    values ($1, $2, $3, $4) returning nome, preco, cfop, qtde`,
+    values ($1, $2, $3, $4) returning nome, preco, cfop, qtde 
+    returning *`,
     [nome, preco, cfop, qtde],
     (error, results) => {
       if (error) {
@@ -29,7 +30,7 @@ const addProduto = (request, response) => {
           message: 'Erro ao inserir o produto: ' + error
         })
       }
-      response.status(200).json({
+      response.status(201).json({
         status: "success", message: "Produto criado",
         data: results.rows[0]
       })
