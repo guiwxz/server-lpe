@@ -20,7 +20,7 @@ const getProdutos = (request, response) => {
 const addProduto = (request, response) => {
   const { nome, preco, cfop, qtde } = request.body;
   pool.query(`INSERT INTO produtos (nome, preco, cfop, qtde) 
-    values ($1, $2, $3, $4) returning nome, preco, cfop, qtde 
+    values ($1, $2, $3, $4)  
     returning *`,
     [nome, preco, cfop, qtde],
     (error, results) => {
