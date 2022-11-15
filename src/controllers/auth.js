@@ -28,9 +28,9 @@ const login = (request, response, next) => {
           nome_usuario
         },
         process.env.SECRET,
-        {
-          expiresIn: 300 // expira em 5 min
-        }
+        // {
+        //   expiresIn: 300 // expira em 5 min
+        // }
       )
 
       return response.json({
